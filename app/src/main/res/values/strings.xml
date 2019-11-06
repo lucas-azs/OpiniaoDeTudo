@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">OpiniaoDeTudo</string>
+    <string name="nova_opiniao">Nova Opinião</string>
+    <string name="form_review_name">Nome</string>
+    <string name="opiniao">Opinião</string>
+    <string name="texto_botao">Gravar</string>
+
 </resources>
