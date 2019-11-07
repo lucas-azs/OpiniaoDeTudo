@@ -1,5 +1,6 @@
 package com.example.opiniaodetudo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
             val review = textViewReview.text
             Toast.makeText(this, "Nome:$name - Opinião:$review", Toast.LENGTH_LONG).show()
             ReviewRepository.instance.save(name.toString(), review.toString())
+
+            startActivity(Intent(this, ListActivity::class.java))
         }
 
 
