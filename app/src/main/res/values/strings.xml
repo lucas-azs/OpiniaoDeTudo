@@ -4,5 +4,6 @@
     <string name="form_review_name">Nome</string>
     <string name="opiniao">Opinião</string>
     <string name="texto_botao">Gravar</string>
+    <string name="menu_list_reviews_label">Menu</string>
 
 </resources>
