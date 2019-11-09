@@ -2,6 +2,7 @@ package com.example.opiniaodetudo
 
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -28,9 +29,18 @@ class MainActivity : AppCompatActivity() {
             val name = textViewName.text
             val review = textViewReview.text
             Toast.makeText(this, "Nome:$name - Opinião:$review", Toast.LENGTH_LONG).show()
-            ReviewRepository.instance.save(name.toString(), review.toString())
 
-            startActivity(Intent(this, ListActivity::class.java))
+
+//            ReviewRepository.instance.save(name.toString(), review.toString())
+//            startActivity(Intent(this, ListActivity::class.java))
+
+            object: AsyncTask<Void, Void, Unit>() {
+                override fun doInBackground(vararg params: Void?) {
+                    val repository = ReviewRepository(this@MainActivity.applicationContext)
+                    repository.save(name.toString(), review.toString())
+                    startActivity(Intent(this@MainActivity, ListActivity::class.java))
+                }
+            }.execute()
 
             //Fazer com que qualquer lugar da tela esconda o teclado
             val mainContainer = findViewById<ConstraintLayout>(R.id.main_container)
