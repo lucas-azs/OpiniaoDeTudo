@@ -1,25 +1,11 @@
 package com.example.opiniaodetudo.Repository
 
 import android.content.Context
+import com.example.opiniaodetudo.Infra.ReviewDao
+import com.example.opiniaodetudo.Infra.ReviewDatabase
 import com.example.opiniaodetudo.Model.Review
 import java.util.*
 
-//class ReviewRepository {
-//    private constructor()
-//
-//    companion object {
-//        val instance: ReviewRepository = ReviewRepository()
-//    }
-//
-//    private val data = mutableListOf<Review>()
-//    fun save(name: String, review: String) {
-//        data.add(Review(UUID.randomUUID().toString(), name, review))
-//    }
-//
-//    fun listAll(): List<Review> {
-//        return data.toList()
-//    }
-//}
 
 class ReviewRepository{
     private val reviewDao: ReviewDao
@@ -32,5 +18,13 @@ class ReviewRepository{
     }
     fun listAll(): List<Review> {
         return reviewDao.listAll()
+    }
+
+//    fun delete(id: Review, name: String, review: String) {
+//        reviewDao.delete(Review(id, name, review))
+//    }
+
+    fun update(id: String, name: String, review: String) {
+        reviewDao.update(Review(id, name, review))
     }
 }

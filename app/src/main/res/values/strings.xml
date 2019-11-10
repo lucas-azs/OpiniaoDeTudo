@@ -5,5 +5,7 @@
     <string name="opiniao">Opinião</string>
     <string name="texto_botao">Gravar</string>
     <string name="menu_list_reviews_label">Menu</string>
+    <string name="item_list_edit">Modificar</string>
+    <string name="item_list_delete">Apagar</string>
 
 </resources>

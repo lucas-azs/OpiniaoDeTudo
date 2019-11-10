@@ -1,5 +1,6 @@
 package com.example.opiniaodetudo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -12,9 +13,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.opiniaodetudo.Model.Review
 import com.example.opiniaodetudo.Repository.ReviewRepository
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,22 +28,34 @@ class MainActivity : AppCompatActivity() {
         val textViewName = findViewById<TextView>(R.id.input_nome)
         val textViewReview = findViewById<TextView>(R.id.input_review)
 
-        buttonSave.setOnClickListener {
-            val name = textViewName.text
-            val review = textViewReview.text
-            Toast.makeText(this, "Nome:$name - Opinião:$review", Toast.LENGTH_LONG).show()
+        val reviewToEdit = (intent.getSerializableExtra("item") as Review?)?.also { review ->
+            textViewName.text = review.name
+            textViewReview.text = review.review
+
+            buttonSave.setOnClickListener {
+                val name = textViewName.text
+                val review = textViewReview.text
 
 
-//            ReviewRepository.instance.save(name.toString(), review.toString())
-//            startActivity(Intent(this, ListActivity::class.java))
+                object : AsyncTask<Void, Void, Unit>() {
+                    override fun doInBackground(vararg params: Void?) {
+                        val repository = ReviewRepository(this@MainActivity.applicationContext)
 
-            object: AsyncTask<Void, Void, Unit>() {
-                override fun doInBackground(vararg params: Void?) {
-                    val repository = ReviewRepository(this@MainActivity.applicationContext)
-                    repository.save(name.toString(), review.toString())
-                    startActivity(Intent(this@MainActivity, ListActivity::class.java))
-                }
-            }.execute()
+                        if (reviewToEdit == null) {
+                            repository.save(name.toString(), review.toString())
+                            startActivity(Intent(this@MainActivity, ListActivity::class.java))
+                        } else {
+                            repository.update(reviewToEdit.id, name.toString(), review.toString())
+                            finish()
+                        }
+                    }
+
+                }.execute()
+            }
+
+
+            }
+
 
             //Fazer com que qualquer lugar da tela esconda o teclado
             val mainContainer = findViewById<ConstraintLayout>(R.id.main_container)
@@ -50,15 +65,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item?.itemId == R.id.menu_list_reviews){
+        if (item?.itemId == R.id.menu_list_reviews) {
             startActivity(Intent(this, ListActivity::class.java))
             return true
         }
@@ -66,6 +79,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
 }
+
+
+
+
 
