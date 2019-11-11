@@ -21,13 +21,14 @@ class ListActivity : AppCompatActivity() {
     private fun initList(listView: ListView) {
         object : AsyncTask<Void, Void, ArrayAdapter<Review>>() {
             override fun doInBackground(vararg params: Void?): ArrayAdapter<Review> {
-
+                val reviews = ReviewRepository(this@ListActivity.applicationContext)
+                    .listAll()
                 val adapter = object : ArrayAdapter<Review>(this@ListActivity, -1, reviews) {
                     override fun getView(
                         position: Int,
                         convertView: View?,
-                        parent: ViewGroup
-                    ): View {
+                        parent: ViewGroup): View {
+
                         val itemView =
                             layoutInflater.inflate(R.layout.activity_review_list_item_layout, null)
                         val item = reviews[position]
@@ -50,6 +51,8 @@ class ListActivity : AppCompatActivity() {
     }
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //verificar qual activity chamar, pode ser a item
@@ -63,6 +66,8 @@ class ListActivity : AppCompatActivity() {
         initList(listView)
         configureOnLongClick(listView)
 
+
+
     }
 
     override fun onRestart() {
@@ -72,6 +77,7 @@ class ListActivity : AppCompatActivity() {
                 this@ListActivity.reviews =
                     ReviewRepository(this@ListActivity.applicationContext).listAll().toMutableList()
             }
+
             override fun onPostExecute(result: Unit?) {
                 val listView = findViewById<ListView>(R.id.list_recyclerview)
                 val adapter = listView.adapter as ArrayAdapter<Review>
@@ -101,7 +107,7 @@ class ListActivity : AppCompatActivity() {
             val popupMenu = PopupMenu(this@ListActivity, view)
             popupMenu.inflate(R.menu.list_review_item_menu)
             popupMenu.setOnMenuItemClickListener {
-                when(it.itemId){
+                when (it.itemId) {
                     R.id.item_list_delete -> this@ListActivity.delete(reviews[position])
                     R.id.item_list_edit -> this@ListActivity.openItemForEdition(reviews[position])
                 }
@@ -119,19 +125,11 @@ class ListActivity : AppCompatActivity() {
 
     private fun openItemForEdition(item: Review) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("item", item)
+        val itemPut= item as String
+        intent.putExtra("item", itemPut)
         startActivity(intent)
+
     }
-}
-
-/*
-//fora da apostila
-private fun Intent.putExtra(s: String, item: Review) {
 
 }
 
-
-private fun ReviewRepository.delete(item: Review) {
-
-}
-*/

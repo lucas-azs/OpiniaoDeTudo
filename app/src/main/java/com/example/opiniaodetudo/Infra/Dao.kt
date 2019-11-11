@@ -52,7 +52,6 @@ class ReviewDAOSQLite{
 }
 
 
-
 object ReviewTableInfo {
     const val TABLE_NAME = "Review"
     const val COLUMN_ID = "id"

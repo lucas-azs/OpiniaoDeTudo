@@ -28,9 +28,14 @@ class MainActivity : AppCompatActivity() {
         val textViewName = findViewById<TextView>(R.id.input_nome)
         val textViewReview = findViewById<TextView>(R.id.input_review)
 
-        val reviewToEdit = (intent.getSerializableExtra("item") as Review?)?.also { review ->
-            textViewName.text = review.name
-            textViewReview.text = review.review
+
+        //verificar se compila
+        fun getReview() {
+            val reviewToEdit = (intent.getSerializableExtra("item") as Review?)?.also { review ->
+                textViewName.text = review.name
+                textViewReview.text = review.review
+            }
+
 
             buttonSave.setOnClickListener {
                 val name = textViewName.text
@@ -54,16 +59,16 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            }
-
-
-            //Fazer com que qualquer lugar da tela esconda o teclado
-            val mainContainer = findViewById<ConstraintLayout>(R.id.main_container)
-            mainContainer.setOnTouchListener { v, event ->
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-            }
         }
+
+
+        //Fazer com que qualquer lugar da tela esconda o teclado
+        val mainContainer = findViewById<ConstraintLayout>(R.id.main_container)
+        mainContainer.setOnTouchListener { v, event ->
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

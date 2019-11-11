@@ -9,6 +9,7 @@ import java.util.*
 
 class ReviewRepository{
     private val reviewDao: ReviewDao
+
     constructor(context: Context){
         val reviewDatabase = ReviewDatabase.getInstance(context)
         reviewDao = reviewDatabase.reviewDao()
@@ -20,9 +21,9 @@ class ReviewRepository{
         return reviewDao.listAll()
     }
 
-//    fun delete(id: Review, name: String, review: String) {
-//        reviewDao.delete(Review(id, name, review))
-//    }
+    fun delete(review: Review) {
+        reviewDao.delete(review)
+    }
 
     fun update(id: String, name: String, review: String) {
         reviewDao.update(Review(id, name, review))
