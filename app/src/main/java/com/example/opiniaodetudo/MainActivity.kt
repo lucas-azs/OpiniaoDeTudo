@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //verificar se compila
-        fun getReview() {
+//        fun getReview() {
             val reviewToEdit = (intent.getSerializableExtra("item") as Review?)?.also { review ->
                 textViewName.text = review.name
                 textViewReview.text = review.review
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-        }
+        //}
 
 
         //Fazer com que qualquer lugar da tela esconda o teclado

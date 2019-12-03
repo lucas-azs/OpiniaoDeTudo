@@ -16,7 +16,7 @@ interface ReviewDao {
     fun update(review: Review)
 
     @Delete
-    fun delete(review: Review)
+    fun delete(item: Review)
 
 
 }

@@ -126,7 +126,7 @@ class ListActivity : AppCompatActivity() {
     private fun openItemForEdition(item: Review) {
         val intent = Intent(this, MainActivity::class.java)
         val itemPut= item as String
-        intent.putExtra("item", itemPut)
+        intent.putExtra("item", item)
         startActivity(intent)
 
     }
